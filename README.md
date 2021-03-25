@@ -58,7 +58,7 @@ end
 | title         | string     | null: false                    |
 | catch_copy    | text       | null: false                    |
 | category_id   | integer    | null: false                    |
-| time_id       | integer    | null: false                    |
+| cooktime_id   | integer    | null: false                    |
 | material      | text       | null: false                    |
 | making        | text       | null: false                    |
 | point         | text       |                                |
@@ -69,7 +69,7 @@ end
 - has_many: likes
 
   belongs_to :category_id
-  belongs_to :time_id
+  belongs_to :cooktime_id
 
 with_options presence: true do
   validates :title
