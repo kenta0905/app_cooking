@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'cooks/index'
   root to: "cooks#index"
   resources :cooks do
-    resources :comments, only: [:create]
+    resources :comments
   end
+  resources :users
 end
