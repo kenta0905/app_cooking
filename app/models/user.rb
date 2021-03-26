@@ -4,9 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-# has_many: cooks
-# has_many: comments
-# has_many: likes
+has_many   :cooks   , dependent: :destroy
+has_many   :comments, dependent: :destroy
 
 extend ActiveHash::Associations::ActiveRecordExtensions
 belongs_to :genre

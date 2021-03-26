@@ -1,50 +1,71 @@
 <main class="main">
   <div class="inner">
-    <div class="prototype__wrapper">
-      <p class="prototype__hedding">
-        <%= "プロトタイプのタイトル"%>
+    <div class="cook__wrapper">
+      <p class="cook__hedding">
+        <%= @cook.title %>
       </p>
-      <%= link_to "by プロトタイプの投稿者", root_path, class: :prototype__user %>
+      <%= link_to @cook.user.nickname, root_path, class: :cook__user %>
       <%# プロトタイプの投稿者とログインしているユーザーが同じであれば以下を表示する %>
-        <div class="prototype__manage">
-          <%= link_to "編集する", root_path, class: :prototype__btn %>
-          <%= link_to "削除する", root_path, class: :prototype__btn %>
+        <div class="cook__manage">
+        <% if user_signed_in? && current_user.id == @cook.user_id %>
+          <%= link_to "編集する", edit_cook_path(@cook.id), class: :cook__btn %>
+          <%= link_to "削除する", cook_path(@cook.id), method: :delete, class: :cook__btn %>
+        <% end %>
         </div>
       <%# // プロトタイプの投稿者とログインしているユーザーが同じであれば上記を表示する %>
-      <div class="prototype__image">
-        <%= image_tag "プロトタイプの画像" %>
+      <div class="cook__image">
+        <%= image_tag @cook.image %>
       </div>
-      <div class="prototype__body">
-        <div class="prototype__detail">
+      <div class="cook__body">
+        <div class="cook__detail">
           <p class="detail__title">キャッチコピー</p>
           <p class="detail__message">
-            <%= "プロトタイプのキャッチコピー" %>
+            <%= @cook.catch_copy %>
           </p>
         </div>
-        <div class="prototype__detail">
-          <p class="detail__title">コンセプト</p>
+        <div class="cook__detail">
+          <p class="detail__title">材料</p>
           <p class="detail__message">
-            <%= "プロトタイプのコンセプト" %>
+            <%= @cook.material %>
+          </p>
+        </div>
+        <div class="cook__detail">
+          <p class="detail__title">作り方</p>
+          <p class="detail__message">
+            <%= @cook.making %>
+          </p>
+        </div>
+        <div class="cook__detail">
+          <p class="detail__title">料理のワンポイント</p>
+          <p class="detail__message">
+            <%= @cook.point  %>
           </p>
         </div>
       </div>
-      <div class="prototype__comments">
+      <div class="cook__comments">
         <%# ログインしているユーザーには以下のコメント投稿フォームを表示する %>
-          <%# <%= form_with model: モデル名,local: true do |f|%>
+         <% if user_signed_in? %>
+          <%= form_with(model: [@cook, @comment], local: true) do |f|%>
             <div class="field">
-              <%# <%= f.label :hoge, "コメント" %><br />
-              <%# <%= f.text_field :hoge, id:"comment_text" %>
+           <%= f.label :text, "コメント" %><br />
+              <%= f.text_field :text, id:"comment_text" %>
             </div>
             <div class="actions">
-              <%# <%= f.submit "送信する", class: :form__btn  %>
+                <%= f.submit "送信する", class: :form__btn  %>
             </div>
-          <%# <% end %> 
+          <% end %>  
+         <% end %> 
         <%# // ログインしているユーザーには上記を表示する %>
         <ul class="comments_lists">
           <%# 投稿に紐づくコメントを一覧する処理を記述する %>
             <li class="comments_list">
-              <%# <%= " コメントのテキスト "%>
-              <%# <%= link_to "（ ユーザー名 ）", root_path, class: :comment_user %>
+            <h4>＜コメント一覧＞</h4>
+              <% @comments.each do |comment| %>
+                <p>
+                  <%= comment.text %>
+                  <%= link_to "#{comment.user.nickname}", cook_path(comment.user_id), class: :comment_user %>
+                </p>
+              <% end %>
             </li>
           <%# // 投稿に紐づくコメントを一覧する処理を記述する %>
         </ul>
