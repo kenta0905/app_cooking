@@ -20,4 +20,18 @@ class Cook < ApplicationRecord
     validates :cooktime_id
   end
 
+  validates :content, presence: true, unless: :was_attached?
+
+  def self.search(search)
+    if search != ""
+      Cook.where('title LIKE(?)', "%#{search}%")
+    else
+      Cook.all
+    end
+  end
+
+  def was_attached?
+    self.image.attached?
+  end
+
 end

@@ -149,6 +149,9 @@ a {
 }
 .card__img {
   margin-bottom: 16px;
+  width: 400px;
+  height: 300px;
+}
 }
 .card__title {
   display: block;
@@ -360,4 +363,13 @@ a {
   color: #fff;
   font-size: 12px;
   font-weight: bold;
+}
+
+.search-form {
+  text-align: center;
+  padding-top: 5px;
+}
+
+.search-form .search-input {
+  margin-right: 30px;
 }
